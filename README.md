@@ -24,3 +24,38 @@ python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
+## Run Locally
+
+export FLASK_APP=app.py
+export FLASK_ENV=development
+
+Open http://127.0.0.1:5000
+
+## API
+| Endpoint | Method | Description |
+| --- | --- | --- |
+| /get-user/&lt;user_id&gt; | GET | Returns user JSON. Optional query param: ``extra``. |
+| /create-user | POST | Create a user. Body: ``{ ``"name": ``"...", ``"email": ``"..." ``}`` |
+
+## Example
+
+# GET
+curl "http://127.0.0.1:5000/get-user/42?extra=some-info"
+# RESPONSE
+{
+  "user_id": "42",
+  "name": "Self Nerfed",
+  "email": "tirthabarua06@gmail.com",
+  "extra": "some-info"
+}
+# POST
+curl -X POST http://127.0.0.1:5000/create-user \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Alice","email":"alice@example.com"}'
+# RESPONSE
+{
+  "user_id": "12345",
+  "name": "Alice",
+  "email": "alice@example.com"
+}
+
